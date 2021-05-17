@@ -4,6 +4,7 @@ MAC_OR_LINUX=mac
 FINAL_DIR=/Volumes/ChiaDump1
 SSH_USER=someuser
 DESTINATION_HOST=myfarmer.mynetwork
+DIRECTORIES_CONTAINING_PLOTS="pm0-mac dl-complete"
 
 STAT_COMMAND="stat -c%s"
 if [ "${MAC_OR_LINUX}" == mac ];then
@@ -11,7 +12,12 @@ if [ "${MAC_OR_LINUX}" == mac ];then
 fi
 
 while true ; do
-  for SOURCE_DIR in pm0-mac ; do
+  for SOURCE_DIR in $DIRECTORIES_CONTAINING_PLOTS; do
+
+    if [ ! -d "${FINAL_DIR}/${SOURCE_DIR}" ];then
+      echo "No insallation of ${SOURCE_DIR} found... skipping"
+      continue
+    fi
 
     cd "${FINAL_DIR}/${SOURCE_DIR}"
     for i in $( find . -name '*.plot' ) ; do
