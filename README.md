@@ -1,7 +1,19 @@
 chia-magic
 ==========
 
+Donation address `xch1gzwvxshufu0crxqr5npcz0cv9mg6gj0zwefxh6rhdvzcwpv8nwjs9h7u8c` :)
+
 A collection of useful utilities to help multi-node plot chia setups.
+
+Disclaimer
+==========
+
+** !! Use at own risk. !!  **- By using these scripts you agree that you are responsible for any outcomes caused by the using of these scripts. In this respect full source code is viewable by you and it is intended that you review the source code before running to ensure you are happy with what it does.
+
+The highest risk areas of this script involve the deletion of plots after downloading and/or after uploading. The deletions should only happen if the plot upload/download is successful, but please check that you are happy with the scripts before running them.
+
+Inventory
+=========
 
 To run on a farm node (with or without hpool mining):
 
