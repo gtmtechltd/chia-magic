@@ -1,0 +1,6 @@
+#!/bin/bash
+
+CHIAFACTORY_HOME="${HOME}/chia/chiafactory-simple-download"
+
+cd "${CHIAFACTORY_HOME}"
+./start.sh

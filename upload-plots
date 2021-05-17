@@ -1,0 +1,38 @@
+#!/bin/bash
+
+MAC_OR_LINUX=mac
+FINAL_DIR=/Volumes/ChiaDump1
+SSH_USER=someuser
+DESTINATION_HOST=myfarmer.mynetwork
+
+STAT_COMMAND="stat -c%s"
+if [ "${MAC_OR_LINUX}" == mac ];then
+  STAT_COMMAND="stat -f%z"
+fi
+
+while true ; do
+  for SOURCE_DIR in pm0-mac ; do
+
+    cd "${FINAL_DIR}/${SOURCE_DIR}"
+    for i in $( find . -name '*.plot' ) ; do
+      if [ "$( ${STAT_COMMAND} $i )" -gt "108000000000" ];then    # Assumes k32
+        echo "$i looks ready, uploading" >&2
+        echo "  - sleeping 30 secs" >&2
+        sleep 30
+        BESTDRIVE="$( ssh ${SSH_USER}@${DESTINATION_HOST} bin/find-emptiest-drive )"
+        if [ -n "${BESTDRIVE}" ];then
+          echo "  - selected ${BESTDRIVE}/${SOURCE_DIR} as location" >&2
+          scp "$i" "${SSH_USER}@${DESTINATION_HOST}:${BESTDRIVE}/${SOURCE_DIR}/" && rm "$i"
+        else
+          echo "  - Could not determine best destination drive. Bailing out" >&2
+        fi
+      else
+        echo "Awaiting $i to be ready/finished" >&2
+      fi
+    done
+  done
+
+  sleep 300
+  echo "Sleeping 300 secs" >&2
+done
+

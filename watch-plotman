@@ -1,0 +1,8 @@
+#!/bin/bash
+
+PLOTMAN_DIR="${HOME}/chia/plotman"
+
+cd "${PLOTMAN_DIR}"
+. ./activate
+
+watch -n 10 plotman status

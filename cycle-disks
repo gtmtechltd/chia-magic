@@ -1,0 +1,25 @@
+#!/bin/bash
+
+MOUNT_PREFIX="/media/myarray"   # Set this to the directory where all your farm disks (HDD) are mounted
+DISK_PREFIX="ChiaArray"         # All your disks should be called xxxx0 xxxx1 xxxx2 - this is the xxxx part
+
+while true ; do
+  echo -n "[$(date +%H:%M:%S)] Cycling disks:"
+  sleep 10
+  for i in 0 1 2 3 4 ; do
+    MOUNTED=$( mount | grep -F "${MOUNT_PREFIX}/${DISK_PREFIX}${i}" )
+    if [ -n "${MOUNTED}" ];then
+      if [ ! -d "${MOUNT_PREFIX}/${DISK_PREFIX}${i}/touch/${RANDOM}" ];then
+        echo ""
+        echo "Please run the following:"
+        echo "  sudo mkdir -p ${MOUNT_PREFIX}/${DISK_PREFIX}${i}/touch"
+        echo "  chown $(whoami) ${MOUNT_PREFIX}/${DISK_PREFIX}${i}/touch"
+      else
+        echo -n "$RANDOM" > "${MOUNT_PREFIX}/${DISK_PREFIX}${i}/touch/${RANDOM}"
+        echo -n "$i"
+      fi
+    fi
+    sleep 1
+  done
+  echo ""
+done

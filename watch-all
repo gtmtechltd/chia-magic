@@ -1,0 +1,20 @@
+#!/bin/bash
+
+PLOTMAN_DIR="${HOME}/chia/plotman"
+
+cd "${PLOTMAN_DIR}"
+. ./activate
+
+watch -n 15 "( 
+  chia farm summary; 
+  echo; 
+  chia wallet show; 
+  echo; 
+  chia show -c | grep FULL_NODE; 
+  echo; 
+  chia farm challenges -l 5; 
+  echo; 
+  plotman status ; 
+  echo ; 
+  tail -n 1000 ~/.chia/mainnet/log/debug.log | grep proofs) | grep -v '^[UBN ]'
+"

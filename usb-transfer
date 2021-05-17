@@ -1,0 +1,12 @@
+#!/bin/bash
+
+MYDIR=$( basename "$PWD" )
+for i in *.plot ; do
+  BESTDRIVE="$( ${HOME}/bin/find-emptiest-drive )"
+  if [ -n "${BESTDRIVE}" ];then
+    echo "Moving file ${i} to ${BESTDRIVE}/${MYDIR}"
+    pv -p "${i}" > "${BESTDRIVE}/${MYDIR}/${i}" && rm -f $i
+  else
+    echo "Could not determine best destination. Bailing out"
+  fi
+done

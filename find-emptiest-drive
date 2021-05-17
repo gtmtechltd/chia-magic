@@ -1,0 +1,7 @@
+#!/bin/bash
+
+MOUNT_PREFIX="/media/myarray"   # Set this to the directory where all your farm disks (HDD) are mounted
+DISK_PREFIX="ChiaArray"         # All your disks should be called xxxx0 xxxx1 xxxx2 - this is the xxxx part
+
+df -k  | grep -F "${DISK_PREFIX}" | awk '{print $5, $6}' | sort -n | head -1 | awk '{print $2}'
+

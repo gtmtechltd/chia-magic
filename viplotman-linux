@@ -1,0 +1,5 @@
+#!/bin/bash
+
+PLOTFILE="${HOME}/.config/plotman/plotman.yaml"
+echo "Editing ${PLOTFILE}"
+vi "${PLOTFILE}"

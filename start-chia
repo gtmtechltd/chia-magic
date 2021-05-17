@@ -1,0 +1,8 @@
+#!/bin/bash
+
+CHIA_HOME="${HOME}/chia/chia-blockchain"
+
+cd "${CHIA_HOME}"
+. ./activate
+cd "${CHIA_HOME}/chia-blockchain-gui"
+npm run electron

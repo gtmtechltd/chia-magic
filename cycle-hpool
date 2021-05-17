@@ -1,0 +1,35 @@
+#!/bin/bash
+
+set -x
+
+HPOOL_PATH="${HOME}/chia/hpool/chia-miner/linux"
+PID="$( pgrep hpool-miner )"
+LOGFILE="${HPOOL_PATH}/log/hpool.log"
+
+if [ -n "$PID" ];then
+  echo "Terminating $PID hpool-miner" >> "${LOGFILE}"
+  kill -TERM "$PID"
+fi
+
+while true ; do
+  sleep 1
+  PID="$( pgrep hpool-miner )"
+  echo "Waiting for $PID..."
+  if [ -z "$PID" ]; then
+    echo "Done"
+    echo "hpool-miner has successfully stopped" >> "${LOGFILE}"
+    break
+  fi
+done
+
+PID="$( pgrep hpool-miner )"
+
+if [ -n "$PID" ];then
+  echo "Force-quitting $PID hpool-miner" >> "${LOGFILE}"
+  kill -9 "$PID"
+  sleep 5
+fi
+
+cd "${HPOOL_PATH}"
+nohup ./hpool-miner-chia >> "${LOGFILE}" &
+

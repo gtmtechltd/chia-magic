@@ -1,0 +1,7 @@
+#!/bin/bash
+
+PLOTMAN_HOME="${HOME}/chia/plotman"
+
+cd "${PLOTMAN_HOME}"
+. ./activate
+plotman plot
